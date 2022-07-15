@@ -42,3 +42,8 @@ jobs:
         # Runs a single command using the runners shell
       - name: Run a one-line script
         run: msbuild /t:publish /p:PublishProfile=AccountManager.UI\Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=publish
+
+      # Make changes to pull request here
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
