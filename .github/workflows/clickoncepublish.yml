@@ -38,7 +38,9 @@ jobs:
         
         # Runs a single command using the runners shell
       - name: Publish
-        run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${GITHUB_REF##*/}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${GITHUB_REF##*/}/publish/
+        env:
+          BRANCH: ${{env.GITHUB_REF_NAME}}
+        run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/$BRANCH/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/$BRANCH/publish/
         
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
