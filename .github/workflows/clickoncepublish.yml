@@ -34,9 +34,12 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Publish
+        run: cd AccountManager.UI
+        
         # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: msbuild /t:publish /p:PublishProfile=AccountManager.UI\Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=publish
+      - name: Publish
+        run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish
         
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
