@@ -30,6 +30,9 @@ jobs:
         with: 
           dotnet-version: 6.0.x
     
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
+          
       - name: Restore dependencies
         run: dotnet restore
     
