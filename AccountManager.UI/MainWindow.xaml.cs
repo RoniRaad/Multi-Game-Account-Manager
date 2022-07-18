@@ -132,9 +132,9 @@ namespace AccountManager.UI
 		{
             try
             {
-                if (File.Exists("Multi-Account-Manager.exe.manifest"))
+                if (File.Exists("Multi-Account-Manager-Experimental.exe.manifest"))
                 {
-                    var assembly = XElement.Load("Multi-Account-Manager.exe.manifest");
+                    var assembly = XElement.Load("Multi-Account-Manager-Experimental.exe.manifest");
                     XNamespace ns = "urn:schemas-microsoft-com:asm.v1";
                     var remoteVersionString = assembly?.Element(ns + "assemblyIdentity")?.Attribute("version")?.Value;
                     if (remoteVersionString is not null)
