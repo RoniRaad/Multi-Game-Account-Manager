@@ -56,14 +56,14 @@ jobs:
         run: cd AccountManager.UI
         
       - name: Find and Replace Master
-        if: ${{ steps.check_step.outputs.branch == 'master' }}
+        if: ${{ needs.check.outputs.branch == 'master' }}
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
           replacements: 'Multi-Account-Manager-Experimental=Multi-Account-Manager'
       
       - name: Find and Replace Experimental
-        if: ${{ steps.check_step.outputs.branch == 'experimental' }}
+        if: ${{ needs.check.outputs.branch == 'experimental' }}
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
