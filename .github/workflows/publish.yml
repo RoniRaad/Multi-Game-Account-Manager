@@ -41,19 +41,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with: 
-          dotnet-version: 6.0.x
-          
-      - name: setup-msbuild
-        uses: microsoft/setup-msbuild@v1.1
-          
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Enter UI Directory
-        run: cd AccountManager.UI
+      - name: remove publish folder
+        run: rm -rf ./publish
         
       - name: Find and Replace Master
         if: ${{ needs.check.outputs.branch == 'master' }}
@@ -68,7 +57,21 @@ jobs:
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
           replacements: 'Multi-Account-Manager=OmniAM-Experimental'
-            
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with: 
+          dotnet-version: 6.0.x
+          
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
+          
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Enter UI Directory
+        run: cd AccountManager.UI
+        
         # Runs a single command using the runners shell
       - name: Publish
         run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
