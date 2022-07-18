@@ -34,7 +34,7 @@ jobs:
           
       - name: Find and Replace Master
         uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ check_step.outputs.branch == 'experimental' }}
+        if: ${{ steps.check_step.outputs.branch == 'experimental' }}
         with:
           find: "Multi-Account-Manager"
           replace: "Multi-Account-Manager-Experimental"
@@ -43,7 +43,7 @@ jobs:
           
       - name: Find and Replace Master
         uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ check_step.outputs.branch == 'master' }}
+        if: ${{ steps.check_step.outputs.branch == 'master' }}
         with:
           find: "Multi-Account-Manager-Experimental"
           replace: "Multi-Account-Manager"
