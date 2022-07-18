@@ -42,6 +42,24 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
+      - name: Find and Replace Master
+        uses: jacobtomlinson/gha-find-replace@v2
+        if: ${{ needs.check.outputs.branch == 'experimental' }}
+        with:
+          find: "Multi-Account-Manager"
+          replace: "Multi-Account-Manager-Experimental"
+          include: "AccountManager.UI/**"
+          regex: true
+          
+      - name: Find and Replace Master
+        uses: jacobtomlinson/gha-find-replace@v2
+        if: ${{ needs.check.outputs.branch == 'master' }}
+        with:
+          find: "Multi-Account-Manager-Experimental"
+          replace: "Multi-Account-Manager"
+          include: "AccountManager.UI/**"
+          regex: true
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with: 
