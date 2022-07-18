@@ -54,7 +54,7 @@ namespace AccountManager.UI.Extensions
 
                 if (parsedArgs.ContainsKey("login"))
                 {
-                    var processes = Process.GetProcessesByName("Multi-Account-Manager-Experimental");
+                    var processes = Process.GetProcessesByName("Multi-Account-Manager-Experimental-Experimental");
                     if (processes.Length != 1)
                     {
                         Node node = new("omni-account-manager", "omni-account-manager", "localhost", (arg) => { });
