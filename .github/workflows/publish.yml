@@ -32,16 +32,6 @@ jobs:
           echo "::set-output name=branch::$branch"
           echo "Branch is $branch."
           
-  build:
-    needs: check 
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      
       - name: Find and Replace Master
         uses: jacobtomlinson/gha-find-replace@v2
         if: ${{ needs.check.outputs.branch == 'experimental' }}
@@ -59,6 +49,19 @@ jobs:
           replace: "Multi-Account-Manager"
           include: "AccountManager.UI/**"
           regex: true
+          
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: \[CI\] Set assembly name.
+  build:
+    needs: check 
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -80,4 +83,4 @@ jobs:
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Published last commit.
+          commit_message: \[CI\] Published last commit.
