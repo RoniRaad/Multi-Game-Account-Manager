@@ -13,7 +13,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   check:
     runs-on: ubuntu-latest
     outputs:
@@ -32,27 +31,6 @@ jobs:
           echo "::set-output name=branch::$branch"
           echo "Branch is $branch."
           
-      - name: Find and Replace Master
-        uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ steps.check_step.outputs.branch == 'experimental' }}
-        with:
-          find: "Multi-Account-Manager"
-          replace: "Multi-Account-Manager-Experimental"
-          include: "AccountManager.UI/**"
-          regex: true
-          
-      - name: Find and Replace Master
-        uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ steps.check_step.outputs.branch == 'master' }}
-        with:
-          find: "Multi-Account-Manager-Experimental"
-          replace: "Multi-Account-Manager"
-          include: "AccountManager.UI/**"
-          regex: true
-          
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: \[CI\] Set assembly name.
   build:
     needs: check 
     # The type of runner that the job will run on
@@ -77,6 +55,20 @@ jobs:
       - name: Enter UI Directory
         run: cd AccountManager.UI
         
+      - name: Find and Replace Master
+        if: ${{ steps.check_step.outputs.branch == 'master' }}
+        uses: datamonsters/replace-action@v2
+        with:
+          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
+          replacements: 'Multi-Account-Manager-Experimental=Multi-Account-Manager'
+      
+      - name: Find and Replace Experimental
+        if: ${{ steps.check_step.outputs.branch == 'experimental' }}
+        uses: datamonsters/replace-action@v2
+        with:
+          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
+          replacements: 'Multi-Account-Manager=Multi-Account-Manager-Experimental'
+            
         # Runs a single command using the runners shell
       - name: Publish
         run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
