@@ -60,14 +60,14 @@ jobs:
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'Multi-Account-Manager-Experimental=Multi-Account-Manager'
+          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
       
       - name: Find and Replace Experimental
         if: ${{ needs.check.outputs.branch == 'experimental' }}
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'Multi-Account-Manager=Multi-Account-Manager-Experimental'
+          replacements: 'Multi-Account-Manager=OmniAM-Experimental'
             
         # Runs a single command using the runners shell
       - name: Publish
@@ -75,4 +75,4 @@ jobs:
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: \[CI\] Published last commit.
+          commit_message: "[CI] Published last commit."
