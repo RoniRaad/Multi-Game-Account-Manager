@@ -42,30 +42,8 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: remove publish folder
-        run: "Remove-Item -Path ./publish -Force -Recurse"
+        run: "Remove-Item -Path ./publish -Force -Recurse -Erroraction Ignore"
         
-      - name: Find and Replace Master
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        uses: datamonsters/replace-action@v2
-        with:
-          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
-
-      - name: Find and Replace Experimental
-        if: ${{ needs.check.outputs.branch == 'experimental' }}
-        uses: datamonsters/replace-action@v2
-        with:
-          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'Multi-Account-Manager=OmniAM-Experimental'
-      
-      - name: Find and Replace Experimental
-        if: ${{ needs.check.outputs.branch == 'experimental' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
-        
-      - name: Find and Replace Master
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
-      
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with: 
