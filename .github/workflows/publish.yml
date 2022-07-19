@@ -41,24 +41,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
-      - name: Find and Replace Master
-        uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ needs.check.outputs.branch == 'experimental' }}
-        with:
-          find: "Multi-Account-Manager"
-          replace: "Multi-Account-Manager-Experimental"
-          include: "AccountManager.UI/**"
-          regex: true
-          
-      - name: Find and Replace Master
-        uses: jacobtomlinson/gha-find-replace@v2
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        with:
-          find: "Multi-Account-Manager-Experimental"
-          replace: "Multi-Account-Manager"
-          include: "AccountManager.UI/**"
-          regex: true
+      - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -69,10 +52,13 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
           
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore -m
 
       - name: Enter UI Directory
         run: cd AccountManager.UI
+        
+      - name: Mage
+        run: "mage -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
         
         # Runs a single command using the runners shell
       - name: Publish
