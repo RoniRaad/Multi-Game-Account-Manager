@@ -76,6 +76,9 @@ jobs:
           
       - name: Restore dependencies
         run: dotnet restore
+      
+      - name: Restore dependencies
+        run: Mage -update
 
       - name: Enter UI Directory
         run: cd AccountManager.UI
