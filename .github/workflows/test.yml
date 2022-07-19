@@ -25,5 +25,5 @@ jobs:
       
       - name: Mage test
         shell: cmd
-        run: "redist/mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
+        run: "redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
       
