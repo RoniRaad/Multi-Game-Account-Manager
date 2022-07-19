@@ -12,6 +12,7 @@
           "Gameloop.Vdf": "0.6.2",
           "Gameloop.Vdf.JsonConverter": "0.2.1",
           "Microsoft.Extensions.Caching.Abstractions": "7.0.0-preview.4.22229.4",
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0-preview.4.22229.4",
           "SonarAnalyzer.CSharp": "8.40.0.48530"
         },
         "runtime": {
@@ -62,6 +63,14 @@
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.22904"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/7.0.0-preview.4.22229.4": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
             "assemblyVersion": "7.0.0.0",
             "fileVersion": "7.0.22.22904"
           }
@@ -848,6 +857,13 @@
       "sha512": "sha512-jtOMAhx3G64ya+OYxw57yty8N9eaCixHYBHtVdpATB+/qiVIByoJY3786eSPcQvPR2EGiHbNdTqS1J1vdmm9kA==",
       "path": "microsoft.extensions.caching.abstractions/7.0.0-preview.4.22229.4",
       "hashPath": "microsoft.extensions.caching.abstractions.7.0.0-preview.4.22229.4.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/7.0.0-preview.4.22229.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nh4Evko0uw2KJTYrc49sgYqwpiOw8abMX/MtH5BomYucp3WQsb/gEmS3WpeQX/ZXoU0kEh7jqxJIpLjYRuyK6A==",
+      "path": "microsoft.extensions.logging.abstractions/7.0.0-preview.4.22229.4",
+      "hashPath": "microsoft.extensions.logging.abstractions.7.0.0-preview.4.22229.4.nupkg.sha512"
     },
     "Microsoft.Extensions.Primitives/7.0.0-preview.4.22229.4": {
       "type": "package",

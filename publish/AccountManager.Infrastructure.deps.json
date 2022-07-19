@@ -11,10 +11,12 @@
           "AccountManager.Core": "1.0.0",
           "CliWrap": "3.4.4",
           "CloudFlareUtilities": "1.3.0",
+          "IPC.NamedPipe": "0.9.3",
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0-preview.4.22229.4",
           "Microsoft.Extensions.Http": "7.0.0-preview.4.22229.4",
           "NeoSmart.Caching.Sqlite": "6.0.1",
           "System.IdentityModel.Tokens.Jwt": "6.18.0",
+          "WindowsShortcutFactory": "1.0.1",
           "YamlDotNet": "11.2.1"
         },
         "runtime": {
@@ -74,6 +76,14 @@
           "lib/netstandard1.0/Gameloop.Vdf.JsonConverter.dll": {
             "assemblyVersion": "0.2.1.0",
             "fileVersion": "0.2.1.0"
+          }
+        }
+      },
+      "IPC.NamedPipe/0.9.3": {
+        "runtime": {
+          "lib/netstandard2.0/IPC.NamedPipe.dll": {
+            "assemblyVersion": "0.9.3.0",
+            "fileVersion": "0.9.3.0"
           }
         }
       },
@@ -1111,6 +1121,14 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
+      "WindowsShortcutFactory/1.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/WindowsShortcutFactory.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
       "YamlDotNet/11.2.1": {
         "runtime": {
           "lib/netstandard2.1/YamlDotNet.dll": {
@@ -1124,7 +1142,8 @@
           "AutoMapper": "11.0.1",
           "Gameloop.Vdf": "0.6.2",
           "Gameloop.Vdf.JsonConverter": "0.2.1",
-          "Microsoft.Extensions.Caching.Abstractions": "7.0.0-preview.4.22229.4"
+          "Microsoft.Extensions.Caching.Abstractions": "7.0.0-preview.4.22229.4",
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0-preview.4.22229.4"
         },
         "runtime": {
           "AccountManager.Core.dll": {}
@@ -1172,6 +1191,13 @@
       "sha512": "sha512-vGw/cRHSDZ/Rh/PDZ8GSMMlRki7ocqU3eh4TNr+Z/cqRpvtg3w0LOW5bn8J8u4AAOjUMSZtNAmYh2OsYHxFhbA==",
       "path": "gameloop.vdf.jsonconverter/0.2.1",
       "hashPath": "gameloop.vdf.jsonconverter.0.2.1.nupkg.sha512"
+    },
+    "IPC.NamedPipe/0.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HdQTKNG4CVcmd+zM/MsWmLAqDU8tOhj5qmQWuY8SjITqDUPOa3ClK4G4ujNPD8Si3Xc0qtTLoMZzxcDQvnfqjw==",
+      "path": "ipc.namedpipe/0.9.3",
+      "hashPath": "ipc.namedpipe.0.9.3.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",
@@ -1900,6 +1926,13 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
+    },
+    "WindowsShortcutFactory/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QNclwFbluDXOqkk025fhyez/EL4b2bGMZJInVQ5ozaiBssW9qffylX42f8ubOHwHogCXuhO01xr5SamN2Qd8hw==",
+      "path": "windowsshortcutfactory/1.0.1",
+      "hashPath": "windowsshortcutfactory.1.0.1.nupkg.sha512"
     },
     "YamlDotNet/11.2.1": {
       "type": "package",

@@ -750,6 +750,11 @@ span:active[b-o29gne8dcr] {
     box-shadow: 0px 0px 6px white;
     cursor: grab;
 }
+/* _content/AccountManager.Blazor/Components/Modals/ExportAccountModal/ExportAccountModal.razor.rz.scp.css */
+label[b-kiig0s8r1s] {
+    font-size:15px;
+    margin-bottom: 3px;
+}
 /* _content/AccountManager.Blazor/Components/Modals/FolderPickerModal.razor.rz.scp.css */
 body[b-nsh72uww87] {
 }
