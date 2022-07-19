@@ -80,10 +80,12 @@ jobs:
           replacements: 'OmniAM-Experimental=Multi-Account-Manager'
 
       - name: Find and Replace Experimental
-        run: "(Get-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
+        if: ${{ needs.check.outputs.branch == 'experimental' }}
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
       - name: Find and Replace Master
-        run: "(Get-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
+        if: ${{ needs.check.outputs.branch == 'master' }}
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
         # Runs a single command using the runners shell
       - name: Publish
