@@ -48,15 +48,15 @@ jobs:
         if: ${{ needs.check.outputs.branch == 'master' }}
         uses: datamonsters/replace-action@v2
         with:
-          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
-      
+          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj,AccountManager.UI/Properties/PublishProfiles/ClickOnceProfile.pubxml'
+          replacements: 'OmniAM-Experimental=Multi-Account-Manager,experimental=master'
+
       - name: Find and Replace Experimental
         if: ${{ needs.check.outputs.branch == 'experimental' }}
         uses: datamonsters/replace-action@v2
         with:
-          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'Multi-Account-Manager=OmniAM-Experimental'
+          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj,AccountManager.UI/Properties/PublishProfiles/ClickOnceProfile.pubxml'
+          replacements: 'Multi-Account-Manager=OmniAM-Experimental,master=experimental'
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
