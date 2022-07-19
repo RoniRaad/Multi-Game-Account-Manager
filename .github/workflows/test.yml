@@ -1,4 +1,4 @@
-name: Publish ClickOnce
+name: Mage test
 
 # Controls when the workflow will run
 on:
@@ -26,6 +26,6 @@ jobs:
         with:
           flavor: full
       
-      - name: Enter UI Directory
-        run: cd AccountManager.UI
+      - name: Mage test
+        run: mage
       
