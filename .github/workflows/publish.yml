@@ -57,12 +57,22 @@ jobs:
       - name: Enter UI Directory
         run: cd AccountManager.UI
         
-      - name: Mage
-        run: "mage -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
-        
         # Runs a single command using the runners shell
       - name: Publish
         run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
+        
+      - name: Get Newest Version
+        id: getversion
+        run: |
+          version = (gci . | ? { $_.PSIsContainer } | sort Name)[-1].Name.Split('_')[1..4] -join "." |
+          echo "::set-output name=latest::$version"
+        
+      - name: Exit UI Directory
+        run: cd ..
+        
+      - name: Mage
+        shell: cmd
+        run: "redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version ${{ steps.getversion.outputs.latest }} -FromDirectory ."
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
