@@ -49,7 +49,7 @@ jobs:
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'OmniAM-Experimental=Multi-Account-Manager,experimental=master'
+          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
 
       - name: Find and Replace Experimental
         if: ${{ needs.check.outputs.branch == 'experimental' }}
@@ -57,6 +57,14 @@ jobs:
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
           replacements: 'Multi-Account-Manager=OmniAM-Experimental'
+      
+      - name: Find and Replace Experimental
+        if: ${{ needs.check.outputs.branch == 'experimental' }}
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
+        
+      - name: Find and Replace Master
+        if: ${{ needs.check.outputs.branch == 'master' }}
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -71,21 +79,6 @@ jobs:
 
       - name: Enter UI Directory
         run: cd AccountManager.UI
-        
-      - name: Find and Replace Master
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        uses: datamonsters/replace-action@v2
-        with:
-          files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
-
-      - name: Find and Replace Experimental
-        if: ${{ needs.check.outputs.branch == 'experimental' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
-        
-      - name: Find and Replace Master
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
         # Runs a single command using the runners shell
       - name: Publish
