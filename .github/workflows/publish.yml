@@ -56,7 +56,7 @@ jobs:
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'Multi-Account-Manager=OmniAM-Experimental,master=experimental'
+          replacements: 'Multi-Account-Manager=OmniAM-Experimental'
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -77,21 +77,13 @@ jobs:
         uses: datamonsters/replace-action@v2
         with:
           files: 'AccountManager.UI/wwwroot/index.html,AccountManager.UI/AccountManager.UI.csproj'
-          replacements: 'OmniAM-Experimental=Multi-Account-Manager,experimental=master'
+          replacements: 'OmniAM-Experimental=Multi-Account-Manager'
 
       - name: Find and Replace Experimental
-        if: ${{ needs.check.outputs.branch == 'experimental' }}
-        uses: datamonsters/replace-action@v2
-        with:
-          files: 'Properties\PublishProfiles\ClickOnceProfile.pubxml'
-          replacements: 'Multi-Game-Account-Manager/master/publish/=Multi-Game-Account-Manager/experimental/publish/'
+        run: "(Get-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
-      - name: Find and Replace Experimental
-        if: ${{ needs.check.outputs.branch == 'master' }}
-        uses: datamonsters/replace-action@v2
-        with:
-          files: 'Properties\PublishProfiles\ClickOnceProfile.pubxml'
-          replacements: 'Multi-Game-Account-Manager/experimental/publish/=Multi-Game-Account-Manager/master/publish/'
+      - name: Find and Replace Master
+        run: "(Get-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
         # Runs a single command using the runners shell
       - name: Publish
