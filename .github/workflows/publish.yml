@@ -41,6 +41,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      - uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
       
       - name: Find and Replace Master
         uses: jacobtomlinson/gha-find-replace@v2
@@ -73,6 +74,9 @@ jobs:
 
       - name: Enter UI Directory
         run: cd AccountManager.UI
+        
+      - name: Mage
+        run: "mage -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
         
         # Runs a single command using the runners shell
       - name: Publish
