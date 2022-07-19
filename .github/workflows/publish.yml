@@ -81,11 +81,11 @@ jobs:
 
       - name: Find and Replace Experimental
         if: ${{ needs.check.outputs.branch == 'experimental' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('master', 'experimental') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
       - name: Find and Replace Master
         if: ${{ needs.check.outputs.branch == 'master' }}
-        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
+        run: "(Get-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml).replace('experimental', 'master') | Set-Content AccountManager.UI\\Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
         
         # Runs a single command using the runners shell
       - name: Publish
