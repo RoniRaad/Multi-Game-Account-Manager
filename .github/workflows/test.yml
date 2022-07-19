@@ -22,10 +22,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - uses: git-for-windows/setup-git-for-windows-sdk@v1.4.2
-        with:
-          flavor: full
       
       - name: Mage test
+        shell: cmd
         run: "redist/mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
       
