@@ -27,5 +27,5 @@ jobs:
           flavor: full
       
       - name: Mage test
-        run: mage
+        run: "redist/mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version 1.6.5.0 -FromDirectory ."
       
