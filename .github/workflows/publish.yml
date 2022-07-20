@@ -77,7 +77,7 @@ jobs:
         
       - name: Mage
         shell: cmd
-        run: redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory "publish\\Application Files\\${{ steps.getversion.outputs.latestunmodified }}"
+        run: redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory "publish"
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
