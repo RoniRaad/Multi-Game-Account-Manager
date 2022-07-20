@@ -70,13 +70,13 @@ jobs:
         shell: cmd
         run: |
           cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
-          ..\\..\\..\\redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
+          ..\\..\\..\\redist\\mage.exe -New Application -Processor msil -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
         
       - name: Mage 2
         shell: cmd
         run: |
           cd "publish"
-          ..\\redist\\mage.exe -New Deployment -Processor x86 -Install true -Publisher "RoniRaad" -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
+          ..\\redist\\mage.exe -New Deployment -Processor msil -Install true -Publisher "RoniRaad" -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
