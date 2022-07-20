@@ -8,7 +8,7 @@
         <expiration maximumAge="0" unit="days" />
       </update>
     </subscription>
-    <deploymentProvider codebase="https://github.com/RoniRaad/Multi-Game-Account-Manager/blob/experimental/publish/Multi-Account-Manager.application" />
+    <deploymentProvider codebase="https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/experimental/publish/Multi-Account-Manager.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
     <framework targetVersion="4.8" profile="Client" supportedRuntime="4.0.30319" />
