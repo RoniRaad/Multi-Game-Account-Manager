@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: set test
         id: test
-        run: "echo ::set-output name=testvar::test0"
+        run: echo ::set-output name=testvar::test0
         
       - name: print test
-        run: "echo ${{ steps.test.outputs.testvar}}"
+        run: echo "${{ steps.test.outputs.testvar}}"
