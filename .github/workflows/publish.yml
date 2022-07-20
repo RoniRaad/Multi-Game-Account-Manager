@@ -64,7 +64,7 @@ jobs:
       - name: Get Newest Version
         id: getversion
         run: |
-          $version = $((gci . | ? { $_.PSIsContainer } | sort Name)[-1].Name.Split('_')[1..4] -join ".")
+          $version = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name.Split('_')[1..4] -join ".")
           echo ::set-output name=latest::$($version)
         
       - name: Exit UI Directory
