@@ -32,7 +32,7 @@ namespace AccountManager.Infrastructure.Clients
         private readonly IDistributedCache _persistantCache;
         private readonly RiotApiUri _riotApiUri;
         private readonly IMapper _autoMapper;
-        private readonly ICurlRequestBuilder _curlRequestBuilder;
+        private readonly ICurlRequestBuilder _requestBuilder;
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
         public RiotClient(IHttpClientFactory httpClientFactory, AlertService alertService, IMemoryCache memoryCache, 
             IDistributedCache persistantCache, IOptions<RiotApiUri> riotApiOptions, IMapper autoMapper, ICurlRequestBuilder curlRequestBuilder )
@@ -43,7 +43,7 @@ namespace AccountManager.Infrastructure.Clients
             _persistantCache = persistantCache;
             _riotApiUri = riotApiOptions.Value;
             _autoMapper = autoMapper;
-            _curlRequestBuilder = curlRequestBuilder;
+            _requestBuilder = curlRequestBuilder;
         }
 
         public async Task<string?> GetExpectedClientVersion()
@@ -62,7 +62,7 @@ namespace AccountManager.Infrastructure.Clients
             if (sessionCookie is not null)
                 cookieCollection.Add(sessionCookie);
 
-            var authResponse = await _curlRequestBuilder.CreateBuilder()
+            var authResponse = await _requestBuilder.CreateBuilder()
                 .SetUri($"{_riotApiUri.Auth}/api/v1/authorization")
                 .SetContent(request)
                 .AddCookies(cookieCollection)
@@ -118,7 +118,7 @@ namespace AccountManager.Infrastructure.Clients
                     return initialAuth;
                 }
 
-                var authResponse = await _curlRequestBuilder.CreateBuilder()
+                var authResponse = await _requestBuilder.CreateBuilder()
                 .SetUri($"{_riotApiUri.Auth}/api/v1/authorization")
                 .SetContent(new AuthRequest
                 {
@@ -150,7 +150,7 @@ namespace AccountManager.Infrastructure.Clients
                         return null;
                     }
 
-                    authResponse = await _curlRequestBuilder.CreateBuilder()
+                    authResponse = await _requestBuilder.CreateBuilder()
                     .SetUri($"{_riotApiUri.Auth}/api/v1/authorization")
                     .SetContent(new MultifactorRequest()
                     {
@@ -199,7 +199,7 @@ namespace AccountManager.Infrastructure.Clients
         public async Task<RiotAuthResponse?> RefreshToken(RiotSessionRequest request, RiotAuthCookies cookies)
         {
             var uriParameters = $"redirect_uri={HttpUtility.UrlEncode(request.RedirectUri)}&client_id={HttpUtility.UrlEncode(request.Id)}&response_type={HttpUtility.UrlEncode(request.ResponseType)}&nonce={HttpUtility.UrlEncode(request.Nonce)}&scope={HttpUtility.UrlEncode(request.Scope)}";
-            var tokenResponse = await _curlRequestBuilder.CreateBuilder()
+            var tokenResponse = await _requestBuilder.CreateBuilder()
                 .SetUri($"{_riotApiUri.Auth}/authorize?{uriParameters}")
                 .AddHeader("X-Riot-ClientVersion", await GetExpectedClientVersion() ?? "")
                 .SetUserAgent("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)")
@@ -260,7 +260,7 @@ namespace AccountManager.Infrastructure.Clients
 
         public async Task<string?> GetEntitlementToken(string token)
         {
-            var response = await _curlRequestBuilder.CreateBuilder()
+            var response = await _requestBuilder.CreateBuilder()
             .SetUri($"{_riotApiUri.Entitlement}/api/token/v1")
             .SetContent(new { })
             .SetBearerToken(token)
