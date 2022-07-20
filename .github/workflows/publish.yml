@@ -74,7 +74,7 @@ jobs:
         shell: cmd
         run: |
           cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
-          ..\\..\\..\\redist\\mage.exe -New Application -Processor msil -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
+          ..\\..\\..\\redist\\mage.exe -New Application -Processor msil -ToFile Multi-Account-Manager.exe.manifest -name Multi-Account-Manager -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
         
       - name: Mage 2
         shell: cmd
