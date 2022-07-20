@@ -61,14 +61,19 @@ jobs:
       - name: Publish
         run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
         
+      - name: Exit UI Directory
+        run: cd ..
+        
       - name: Get Newest Version
         id: getversion
         run: |
-          $version = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name.Split('_')[1..4] -join ".")
-          echo ::set-output name=latest::$($version)
+          $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
+          echo ::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")
+          echo ::set-output name=latestunmodified::$($versionFolder)
         
-      - name: Exit UI Directory
-        run: cd ..
+      - name: Move to publish folder
+        shell: cmd
+        run: "cd publish\\Application File\\${{ steps.getversion.outputs.latestunmodified }}"
         
       - name: Mage
         shell: cmd
