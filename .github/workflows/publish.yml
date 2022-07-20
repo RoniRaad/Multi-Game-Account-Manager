@@ -79,7 +79,7 @@ jobs:
         shell: cmd
         run: |
           cd "publish"
-          ..\\redist\\mage.exe -New Deployment -a sha256RSA -Processor msil -Install true -Publisher "RoniRaad" -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
+          ..\\redist\\mage.exe -New Deployment -a sha256RSA -Processor msil -Install true -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
