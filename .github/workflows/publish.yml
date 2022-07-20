@@ -68,8 +68,13 @@ jobs:
         id: getversion
         run: |
           $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
-          "echo ::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
           "echo ::set-output name=latestunmodified::$($versionFolder)"
+        
+      - name: Get Newest Version
+        id: get_version
+        run: |
+          $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
+          "echo ::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
         
       - name: Move to publish folder
         shell: cmd
@@ -77,7 +82,7 @@ jobs:
         
       - name: Mage
         shell: cmd
-        run: redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.getversion.outputs.latest }}" -FromDirectory .
+        run: redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
