@@ -68,13 +68,13 @@ jobs:
         id: getversion
         run: |
           $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
-          "echo ::set-output name=latestunmodified::$($versionFolder)"
+          Write-Output "::set-output name=latestunmodified::$($versionFolder)"
         
       - name: Get Newest Version
         id: get_version
         run: |
           $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
-          "echo ::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
+          Write-Output "::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
         
       - name: Move to publish folder
         shell: cmd
