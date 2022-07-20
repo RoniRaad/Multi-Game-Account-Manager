@@ -73,11 +73,11 @@ jobs:
         
       - name: Move to publish folder
         shell: cmd
-        run: cd "publish\\Application Files\\${{ steps.getversion.outputs.latestunmodified }}"
+        run: cd "publish\\Application Files\\"${{ steps.getversion.outputs.latestunmodified }}""
         
       - name: Mage
         shell: cmd
-        run: "redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version ${{ steps.getversion.outputs.latest }} -FromDirectory ."
+        run: redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.getversion.outputs.latest }}" -FromDirectory .
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
