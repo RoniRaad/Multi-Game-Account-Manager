@@ -75,8 +75,8 @@ jobs:
       - name: Mage 2
         shell: cmd
         run: |
-          cd "publish\\Application Files"
-          ..\\..\\redist\\mage.exe -New Deployment -Processor x86 -Install true -Publisher "RoniRaad" -ProviderUrl "https://github.com/RoniRaad/Multi-Game-Account-Manager/blob/experimental/publish/Multi-Account-Manager.application" -AppManifest "${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
+          cd "publish"
+          ..\\..\\redist\\mage.exe -New Deployment -Processor x86 -Install true -Publisher "RoniRaad" -ProviderUrl "https://github.com/RoniRaad/Multi-Game-Account-Manager/blob/experimental/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
