@@ -53,15 +53,11 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore -m
 
-      - name: Enter UI Directory
-        run: cd AccountManager.UI
-        
         # Runs a single command using the runners shell
       - name: Publish
-        run: msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
-        
-      - name: Exit UI Directory
-        run: cd ..
+        run: |
+          cd AccountManager.UI
+          msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
         
       - name: Get Newest Version
         id: get_version
@@ -70,25 +66,17 @@ jobs:
           Write-Output "::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
           Write-Output "::set-output name=latestunmodified::$($versionFolder)"
         
-      - name: Enter app directory
-        shell: cmd
-        run: cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
-        
       - name: Mage 1
         shell: cmd
         run: |
           cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
           ..\\..\\..\\redist\\mage.exe -New Application -Processor x86 -ToFile Multi-Account-Manager.exe.manifest -name 'Multi-Account-Manager' -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
         
-      - name: Move up a dir
-        shell: cmd
-        run: cd ".."
-      
       - name: Mage 2
         shell: cmd
         run: |
           cd "publish\\Application Files"
-          ..\\..\\redist\\mage.exe -New Deployment -Processor x86 -Install true -Publisher "RoniRaad" -ProviderUrl "https://github.com/RoniRaad/Multi-Game-Account-Manager/blob/experimental/publish/Multi-Account-Manager.application" -AppManifest "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
+          ..\\..\\redist\\mage.exe -New Deployment -Processor x86 -Install true -Publisher "RoniRaad" -ProviderUrl "https://github.com/RoniRaad/Multi-Game-Account-Manager/blob/experimental/publish/Multi-Account-Manager.application" -AppManifest "${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.exe.manifest" -ToFile Multi-Account-Manager.application
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
