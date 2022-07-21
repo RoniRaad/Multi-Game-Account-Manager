@@ -10,11 +10,8 @@
     </subscription>
     <deploymentProvider codebase="https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/experimental/publish/Multi-Account-Manager.application" />
   </deployment>
-  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
-    <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
-  </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Application Files\Multi-Account-Manager_1_6_5_0\Multi-Account-Manager.dll.manifest" size="68436">
+    <dependentAssembly dependencyType="install" codebase="Application Files/Multi-Account-Manager_1_6_5_0/Multi-Account-Manager.exe.manifest" size="68436">
       <assemblyIdentity name="Multi-Account-Manager.exe" version="1.6.5.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
@@ -25,4 +22,7 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
+    <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
+  </compatibleFrameworks>
 </asmv1:assembly>
