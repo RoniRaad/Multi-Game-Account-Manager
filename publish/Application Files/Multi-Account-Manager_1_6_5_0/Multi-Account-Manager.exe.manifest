@@ -690,14 +690,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Multi-Account-Manager.dll.deploy" size="392704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Multi-Account-Manager.dll.deploy" size="393728">
       <assemblyIdentity name="Multi-Account-Manager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>CDcnuJVji91A86347P6Dlbj2CYB+TpEIzOg1D5NWcjs=</dsig:DigestValue>
+        <dsig:DigestValue>C9vxNfaVGlZ+iAilhNzkTHw29+NCTCE+Ekk88Pup5g8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -709,7 +709,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HsYjXxp9gsd5/kYZjWcF/YwWVTcCNmEN0tVegX/MzQo=</dsig:DigestValue>
+        <dsig:DigestValue>IQhn8PHCQlCR09lWetihxl4eqAdNlmcstFqhY4zq0i4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -905,13 +905,13 @@
       <dsig:DigestValue>4Zjq8SjOXKVo/ZrgT6XivQQft8/bTz5jQVkpG9hXmoM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Multi-Account-Manager.runtimeconfig.json.deploy" size="372">
+  <file name="Multi-Account-Manager.runtimeconfig.json.deploy" size="266">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>HsoPDHAHCqg7tgnkt0mybctECXhDJgMnJjlHIiJKCYo=</dsig:DigestValue>
+      <dsig:DigestValue>MhtORju6zWETqjN1Eb3r9ec1bplxdENGsoQkYHx7SDo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="redist\mageui.exe.config.deploy" size="379">
