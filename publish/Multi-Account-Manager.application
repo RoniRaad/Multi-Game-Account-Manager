@@ -12,7 +12,7 @@
   </deployment>
   <dependency>
     <dependentAssembly dependencyType="install" codebase="Application Files/Multi-Account-Manager_1_6_5_0/Multi-Account-Manager.dll.manifest" size="68436">
-      <assemblyIdentity name="Multi-Account-Manager.exe" version="1.6.5.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+      <assemblyIdentity name="Multi-Account-Manager.dll" version="1.6.5.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
