@@ -60,7 +60,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AdeaqrVW7HA5uVOBjLc8IDHvV/8bRNUWAoCAd8GnBtQ=</dsig:DigestValue>
+      <dsig:DigestValue>6E5oOevIGUcq1L16scRIzX4dnQT0FBab2mvy50JnhVA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="AccountManager.Core.dll" size="305152">
@@ -69,7 +69,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>T4uJDpZQEtFDMZd9PvphqRDajtkQJ5giqZkFdNAknF8=</dsig:DigestValue>
+      <dsig:DigestValue>Y7T+pL+LYPS0WAec337agw14/LjVL7dlOo62zXyrkI4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="AccountManager.Infrastructure.dll" size="137728">
@@ -78,7 +78,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>PvMiLkqXpZlz7Xy9HbYBNuvLyY0yVFKHEJ0cvcWTAU8=</dsig:DigestValue>
+      <dsig:DigestValue>fpbysoNMVYSl8bUvfrmqLpxz3WlrgoetoLNKNMPYgMo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="appsettings.json" size="491">
@@ -600,7 +600,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zo5XVrsWu+SIHfhfwJnTol2Q32SKzlHqCdBh833eXlE=</dsig:DigestValue>
+      <dsig:DigestValue>ShXCzOzFv019SLynDTOmoZ1y8QnLmGIQxhot3X2EHoc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Multi-Account-Manager.exe" size="326656">
@@ -609,7 +609,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>N3uqlugDzWibFCEDBejE9zAHC8x0LQEIRmFNFQl+5Hc=</dsig:DigestValue>
+      <dsig:DigestValue>L4NHyGMWnb95nG0EKxm1EY01GM9WQj0QGh7ervg1XVA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Multi-Account-Manager.runtimeconfig.json" size="372">
