@@ -11,14 +11,14 @@
     <deploymentProvider codebase="https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/experimental/publish/Multi-Account-Manager.application" />
   </deployment>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Application Files\Multi-Account-Manager_1_6_5_0\Multi-Account-Manager.dll.manifest" size="67000">
+    <dependentAssembly dependencyType="install" codebase="Application Files\Multi-Account-Manager_1_6_5_0\Multi-Account-Manager.exe.manifest" size="86064">
       <assemblyIdentity name="Multi-Account-Manager.exe" version="1.6.5.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>3EGWb9gcZVU+bALwXWZTUlxf0Es=</dsig:DigestValue>
+        <dsig:DigestValue>/XwrM2VKYLEvvPbINAWmMksYiAo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
