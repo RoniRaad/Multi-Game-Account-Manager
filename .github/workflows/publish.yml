@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Delete publish folder
-        run: Remove-Item -Recurse -Force some_dir -ErrorAction Ignore
+        run: Remove-Item -Recurse -Force publish -ErrorAction Ignore
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -66,21 +66,7 @@ jobs:
           $versionFolder = $((gci ".\\publish\\Application Files" | ? { $_.PSIsContainer } | sort Name)[-1].Name)
           Write-Output "::set-output name=latest::$($versionFolder.Split('_')[1..4] -join ".")"
           Write-Output "::set-output name=latestunmodified::$($versionFolder)"
-        
-      - name: Mage 1
-        shell: cmd
-        if: ${{false}}
-        run: |
-          cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
-          ..\\..\\..\\redist\\mage.exe -New Application -a sha256RSA -Processor msil -ToFile Multi-Account-Manager.dll.manifest -name Multi-Account-Manager -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
-        
-      - name: Mage 2
-        shell: cmd
-        if: ${{false}}
-        run: |
-          cd "publish"
-          ..\\redist\\mage.exe -New Deployment -a sha256RSA -Processor msil -Install true -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.dll.manifest" -ToFile Multi-Account-Manager.application
-      
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Published last commit.
