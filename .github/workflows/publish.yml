@@ -13,7 +13,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   check:
     runs-on: ubuntu-latest
     outputs:
@@ -59,7 +58,7 @@ jobs:
         # Runs a single command using the runners shell
       - name: Publish
         run: |
-          msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
+          msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:MapFileExtensions=true /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
         
       - name: Get Newest Version
         id: get_version
@@ -70,12 +69,14 @@ jobs:
         
       - name: Mage 1
         shell: cmd
+        if: ${{false}}
         run: |
           cd "publish\\Application Files\\${{ steps.get_version.outputs.latestunmodified }}"
-          ..\\..\\..\\redist\\mage.exe -New Application -a sha256RSA -Processor msil -ToFile Multi-Account-Manager.exe.manifest -name Multi-Account-Manager -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
+          ..\\..\\..\\redist\\mage.exe -New Application -a sha256RSA -Processor msil -ToFile Multi-Account-Manager.dll.manifest -name Multi-Account-Manager -Version "${{ steps.get_version.outputs.latest }}" -FromDirectory .
         
       - name: Mage 2
         shell: cmd
+        if: ${{false}}
         run: |
           cd "publish"
           ..\\redist\\mage.exe -New Deployment -a sha256RSA -Processor msil -Install true -ProviderUrl "https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/Multi-Account-Manager.application" -AppManifest "Application Files\\${{ steps.get_version.outputs.latestunmodified }}\\Multi-Account-Manager.dll.manifest" -ToFile Multi-Account-Manager.application
