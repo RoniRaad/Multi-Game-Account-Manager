@@ -59,7 +59,6 @@ jobs:
         # Runs a single command using the runners shell
       - name: Publish
         run: |
-          cd AccountManager.UI
           msbuild /t:publish /p:PublishProfile=Properties\PublishProfiles\ClickOnceProfile.pubxml /p:PublishDir=../publish /p:PublishUrl=../publish /p:InstallUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/ /p:UpdateUrl=https://raw.githubusercontent.com/RoniRaad/Multi-Game-Account-Manager/${{needs.check.outputs.branch}}/publish/
         
       - name: Get Newest Version
