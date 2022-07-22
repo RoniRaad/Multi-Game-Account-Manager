@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -29,6 +30,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using NeoSmart.Caching.Sqlite;
 using Plk.Blazor.DragDrop;
 
@@ -46,250 +48,65 @@ namespace AccountManager.UI
         public MainWindow()
         {
 			// This file acts as a flag to delete the cache file before initializing
-			if (File.Exists(@".\deletecache"))
-            {
-				File.Delete(@".\cache.db");
-				File.Delete(@".\deletecache");
-			}
-			var builder = new ConfigurationBuilder()
-			.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-			Configuration = builder.Build();
-
-			ServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddBlazorWebView();
-            serviceCollection.AddBlazorDragDrop();
-            serviceCollection.AddOptions();
-			serviceCollection.AddSqliteCache(options => {
-				options.CachePath = @".\cache.db";
-			});
-			serviceCollection.AddMemoryCache();
-			var riotApiUri = Configuration.GetSection("RiotApiUri").Get<RiotApiUri>();
-			serviceCollection.AddHttpClient("RiotAuth", (httpClient) =>
-            {
-				httpClient.BaseAddress = new Uri(riotApiUri?.Auth ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false,
-				};
-			});
-			serviceCollection.AddHttpClient("RiotEntitlement", (httpClient) =>
-			{
-				httpClient.BaseAddress = new Uri(riotApiUri?.Entitlement ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false
-				};
-			});
-			serviceCollection.AddHttpClient("RiotSessionNA", (httpClient) =>
-			{
-				httpClient.BaseAddress = new Uri(riotApiUri?.LeagueSessionUS ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false
-				};
-			});
-			serviceCollection.AddHttpClient("LeagueNA", (httpClient) =>
-			{
-				httpClient.BaseAddress = new Uri(riotApiUri?.LeagueNA ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false
-				};
-			});
-			serviceCollection.AddHttpClient("Valorant", (httpClient) =>
-			{
-				httpClient.BaseAddress = new Uri(riotApiUri?.Valorant ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false
-				};
-			});
-			serviceCollection.AddHttpClient("ValorantNA", (httpClient) =>
-			{
-				httpClient.BaseAddress = new Uri(riotApiUri?.ValorantNA ?? "");
-				httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Riot-ClientPlatform", "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-				httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("RiotClient/50.0.0.4396195.4381201 rso-auth (Windows;10;;Professional, x64)");
-				httpClient.DefaultRequestVersion = HttpVersion.Version20;
-			}).ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				x.PrimaryHandler = new HttpClientHandler
-				{
-					UseCookies = false
-				};
-			});
-			serviceCollection.AddHttpClient("SSLBypass").ConfigureHttpMessageHandlerBuilder(x =>
-			{
-				var httpClientHandler = new HttpClientHandler();
-				httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
-				{
-					return true;
-				};
-
-				x.PrimaryHandler = httpClientHandler;
-			});
-
-			serviceCollection.Configure<RiotApiUri>(Configuration.GetSection("RiotApiUri"));
-			serviceCollection.Configure<AboutEndpoints>(Configuration.GetSection("AboutEndpoints"));
-			serviceCollection.AddSingleton<IIOService, IOService>();
-			serviceCollection.AddSingleton<AlertService>();
-			serviceCollection.AddSingleton<AppState>();
-			serviceCollection.AddSingleton<AuthService>();
-			serviceCollection.AddAutoMapper((cfg) =>
-			{
-				cfg.CreateMap<int, ValorantRank>()
-				.ForMember(d => d.Tier, opt => opt.MapFrom((src) => ValorantRank.RankMap[src / 3]))
-				.ForMember(d => d.Ranking, opt => opt.MapFrom((src) => src != 0 ? new string('I', src % 3 + 1) : ""))
-				.ForMember(d => d.HexColor, opt => opt.MapFrom((src) => ValorantRank.RankedColorMap[ValorantRank.RankMap[src / 3].ToLower()]));
-
-				cfg.CreateMap<Rank, LeagueRank>()
-				.ForMember(d => d.Tier, opt => opt.MapFrom((src) => src.Tier))
-				.ForMember(d => d.Ranking, opt => opt.MapFrom((src) => src.Ranking))
-				.ForMember(d => d.HexColor, opt => opt.MapFrom((src) => LeagueRank.RankedColorMap[!string.IsNullOrEmpty(src.Tier) ? src.Tier.ToLower() : "unranked"]));
-
-				cfg.CreateMap<Rank, TeamFightTacticsRank>()
-				.ForMember(d => d.Tier, opt => opt.MapFrom((src) => src.Tier))
-				.ForMember(d => d.Ranking, opt => opt.MapFrom((src) => src.Ranking))
-				.ForMember(d => d.HexColor, opt => opt.MapFrom((src) => TeamFightTacticsRank.RankedColorMap[!string.IsNullOrEmpty(src.Tier) ? src.Tier.ToLower() : "unranked"]));
-
-				cfg.CreateMap<string, ValorantCharacter>()
-				.ForMember(d => d.Name, opt => opt.MapFrom((src) => ValorantCharacter.CharacterMapping.ContainsKey(src) ? ValorantCharacter.CharacterMapping[src] : "UNKNOWN CHARACTER"))
-				.ReverseMap();
-
-				cfg.CreateMap<MatchHistory, MatchHistoryResponse>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Json, MatchHistoryResponse.Json>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Metadata, MatchHistoryResponse.Metadata>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Participant, MatchHistoryResponse.Participant>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Ban, MatchHistoryResponse.Ban>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Team, MatchHistoryResponse.Team>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Participant, MatchHistoryResponse.Participant>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Objectives, MatchHistoryResponse.Objectives>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Baron, MatchHistoryResponse.Baron>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Challenges, MatchHistoryResponse.Challenges>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Champion, MatchHistoryResponse.Champion>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Dragon, MatchHistoryResponse.Dragon>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Game, MatchHistoryResponse.Game>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Inhibitor, MatchHistoryResponse.Inhibitor>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Json, MatchHistoryResponse.Json>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Metadata, MatchHistoryResponse.Metadata>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Participant, MatchHistoryResponse.Participant>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Perks, MatchHistoryResponse.Perks>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.RiftHerald, MatchHistoryResponse.RiftHerald>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Selection, MatchHistoryResponse.Selection>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.StatPerks, MatchHistoryResponse.StatPerks>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Style, MatchHistoryResponse.Style>()
-				.ReverseMap();
-				cfg.CreateMap<MatchHistory.Tower, MatchHistoryResponse.Tower>()
-				.ReverseMap();
-
-				cfg.AllowNullDestinationValues = true;
-			});
-			serviceCollection.AddTransient<LeagueClient>();
-			serviceCollection.AddTransient<LeagueTokenClient>();
-			serviceCollection.AddSingleton<RiotFileSystemService>();
-			serviceCollection.AddSingleton<ValorantClient>();
-            serviceCollection.AddSingleton<LeagueFileSystemService>();
-            serviceCollection.AddSingleton<ValorantGraphService>();
-            serviceCollection.AddSingleton<ILeagueClient, LeagueClient>();
-            serviceCollection.AddSingleton<ISteamLibraryService, SteamLibraryService>();
-			serviceCollection.AddSingleton<RiotClient>();
-			serviceCollection.AddSingleton<LeagueClient>();
-            serviceCollection.AddSingleton<ILeagueTokenClient>((services) => new CachedLeagueTokenClient(services.GetRequiredService<IMemoryCache>(), services.GetRequiredService<LeagueTokenClient>()));
-            serviceCollection.AddSingleton<IValorantClient>((services) => new CachedValorantClient(services.GetRequiredService<IMemoryCache>(), services.GetRequiredService<IDistributedCache>(), services.GetRequiredService<ValorantClient>()));
-            serviceCollection.AddSingleton<IRiotClient>((services) => new CachedRiotClient(services.GetRequiredService<IMemoryCache>(), services.GetRequiredService<RiotClient>()));
-			serviceCollection.AddSingleton<ILeagueClient>((services) => new CachedLeagueClient(services.GetRequiredService<IMemoryCache>(), services.GetRequiredService<LeagueClient>()));
-			serviceCollection.AddSingleton<ILeagueGraphService>((services) => new CachedLeagueGraphService(services.GetRequiredService<IDistributedCache>(), services.GetRequiredService<LeagueGraphService>()));
-            serviceCollection.AddSingleton<IValorantGraphService>((services) => new CachedValorantGraphService(services.GetRequiredService<IDistributedCache>(), services.GetRequiredService<ValorantGraphService>()));
-            serviceCollection.AddSingleton<ICurlRequestBuilder, CurlRequestBuilder>();
-			serviceCollection.AddSingleton<LeagueGraphService>();
-			serviceCollection.AddSingleton<ITeamFightTacticsGraphService, TeamFightTacticsGraphService>();
-			serviceCollection.AddSingleton<ICurlRequestBuilder, CurlRequestBuilder>();
-			serviceCollection.AddSingleton<ICurlRequestBuilder, CurlRequestBuilder>();
-			serviceCollection.AddSingleton<LeagueTokenService>();
-			serviceCollection.AddBlazorise(options =>
-			{
-				options.Immediate = true;
-			})
-			.AddBootstrapProviders()
-			.AddFontAwesomeIcons();
-			serviceCollection.AddSingleton<IAccountService, AccountService>();
-			serviceCollection.AddSingleton<IUserSettingsService<UserSettings>, UserSettingsService<UserSettings>>();
-			serviceCollection.AddFactory<AccountType, IPlatformService>()
-				.AddImplementation<SteamPlatformService>(AccountType.Steam)
-				.AddImplementation<LeaguePlatformService>(AccountType.League)
-				.AddImplementation<TeamFightTacticsPlatformService>(AccountType.TeamFightTactics)
-				.AddImplementation<ValorantPlatformService>(AccountType.Valorant)
-				.Build();
-			serviceCollection.AddFactory<AccountType, ITokenService>()
-				.AddImplementation<LeagueTokenService>(AccountType.League)
-				.AddImplementation<LeagueTokenService>(AccountType.TeamFightTactics)
-				.AddImplementation<RiotTokenService>(AccountType.Valorant)
-				.Build();
-			Resources.Add("services", serviceCollection.BuildServiceProvider());
-			InitializeComponent();
 			Task.Run(() =>
 			{
 				try
 				{
-					if (File.Exists("Multi-Account-Manager.exe.manifest"))
+                    if (File.Exists("Multi-Account-Manager.exe.manifest"))
 					{
-						var assembly = XElement.Load("Multi-Account-Manager.exe.manifest");
-						XNamespace ns = "urn:schemas-microsoft-com:asm.v1";
-						var remoteVersionString = assembly?.Element(ns + "assemblyIdentity")?.Attribute("version")?.Value;
-						if (remoteVersionString is not null)
+                        using (var client = new WebClient())
+                        {
+                            client.DownloadFile("https://github.com/RoniRaad/Omni-Account-Manager/releases/download/1.6.6/Setup.exe", "Setup.exe");
+                            Process.Start("Setup.exe");
+
+                            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
+                            foreach (var v in key.GetSubKeyNames())
+                            {
+                                RegistryKey productKey = key.OpenSubKey(v, true);
+                                if (productKey != null)
+                                {
+                                    foreach (var value in productKey.GetValueNames())
+                                    {
+                                        string displayName = Convert.ToString(productKey.GetValue("DisplayName"));
+										if (displayName.StartsWith("Multi-Account-Manager"))
+										{
+											productKey.DeleteValue(value);
+										}
+                                    }
+                                }
+                            }
+                        }
+
+                        var directories = Directory.GetDirectories("../");
+                        foreach (var dir in directories)
+                        {
+							try
+							{
+                                DeleteDirectory(dir);
+                            }
+							catch
+							{
+
+							}
+                        }
+
+                        var programsPath = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
+                        var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+						foreach (var file in Directory.GetFiles(desktopPath))
 						{
-							var version = new Version(remoteVersionString);
-							this.Dispatcher.Invoke(() => {
-								versionNum.Text = $"v{version}";
-							});
+							if (file.StartsWith("Multi-Account-Manager"))
+							{
+								File.Delete(file);
+							}
 						}
-					}
-				}
+
+                        if (Directory.Exists(@$"{programsPath}\Multi-Account-Manager"))
+                            Directory.Delete(@$"{programsPath}\Multi-Account-Manager", true);
+                    }
+
+                    Environment.Exit(0);
+                }
 				catch
 				{
 					this.Dispatcher.Invoke(() => {
@@ -297,9 +114,29 @@ namespace AccountManager.UI
 					});
 				}
 			});
-		}
 
-		private void Close(object sender, RoutedEventArgs e)
+            InitializeComponent();
+        }
+
+        public static void DeleteDirectory(string target_dir)
+        {
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
+        }
+        private void Close(object sender, RoutedEventArgs e)
         {
 			this.Close();
         }
